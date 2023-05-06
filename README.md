@@ -1,3 +1,19 @@
+# Realtime Chatapp using React
+
+## Tech Stack
+
+    - React
+    - TypeScript
+    - Next.js
+    - TailwindCSS
+    - WebSockets
+    - Redis (In-Mem Cache)
+
+## Next.js Routing (Filebased System instead of Client Side)
+
+    - /app/page.tsx: Default Page (localhost:3000/)
+    - /app/dashboard/page.tsx: dashboard page (localhost:3000/dashboard)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
