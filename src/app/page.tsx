@@ -3,9 +3,10 @@ import { db } from "@/lib/db";
 
 export default async function Home() {
 
-  await db.set('hello', 'world')
+  // await db.set('hello', 'world')
 
   return (
-    <Button>Click Me</Button>
+    // create a button and use the custom variant we created ghost to make it transparent and appear when hovered
+    <Button variant={'ghost'}>Click Me</Button>
   )
 }
