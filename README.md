@@ -6,13 +6,21 @@
     - TypeScript
     - Next.js
     - TailwindCSS
+    - NextAuth (to handle OAuth)
     - WebSockets
-    - Redis (In-Mem Cache)
+    - Redis (Using Upstash)
+
+## Generating own secret key for use in Next Auth decrypt of JWT
+
+    - openssl genrsa 2048 in terminal
+    - store in .env file
 
 ## Next.js Routing (Filebased System instead of Client Side)
 
     - /app/page.tsx: Default Page (localhost:3000/)
-    - /app/dashboard/page.tsx: dashboard page (localhost:3000/dashboard)
+    Note: the (dashboard) or (auth) do not affect the endpoint url -> just helps with readability of codebase
+    - /app/(dashboard)/dashboard/page.tsx: dashboard page (localhost:3000/dashboard)
+    - /app/(auth)/login/page.tsx: login page (localhost:3000/login)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
