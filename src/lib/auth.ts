@@ -2,7 +2,7 @@ import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
 import { NextAuthOptions } from "next-auth";
 import { db } from "./db";
 import GoogleProvider from "next-auth/providers/google";
-import { TokenClass } from "typescript";
+import DiscordProvider from "next-auth/providers/discord";
 
 // check if we set the environment variables
 function getGoogleCredentials() {
@@ -25,6 +25,31 @@ function getGoogleCredentials() {
     return { clientId, clientSecret };
 }
 
+// check if we set the discord environment variables
+function getDiscordCredentials() {
+    const clientId = process.env.DISCORD_CLIENT_ID;
+    const clientSecret = process.env.DISCORD_CLIENT_SECRET;
+    
+    // check if clientId and clientSecret are defined
+    if (!clientId || clientId.length === 0) {
+        throw new Error(
+            "Missing DISCORD_CLIENT_ID environment variable"
+        );
+    }
+
+    if (!clientSecret || clientSecret.length === 0) {
+        throw new Error(
+            "Missing DISCORD_CLIENT_SECRET environment variable"
+        );
+    }
+    // return the credentials object
+    return { clientId, clientSecret };
+}
+
+// Discord Scopes
+// https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes
+const scopes = ['identify'].join(' ');
+
 // adapter: handles auth data persistence in database
 // NextAuthOptions is a type that defines the options that we can pass to NextAuth
 export const authOptions: NextAuthOptions = {
@@ -39,6 +64,11 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({
             clientId: getGoogleCredentials().clientId,
             clientSecret: getGoogleCredentials().clientSecret,
+        }),
+        DiscordProvider({
+            clientId: getDiscordCredentials().clientId,
+            clientSecret: getDiscordCredentials().clientSecret,
+            authorization: {params: {scope: scopes}},
         }),
     ],
     // callbacks are actions that are executed when certain next auth events happen
@@ -77,7 +107,9 @@ export const authOptions: NextAuthOptions = {
 
             // return the session
             return session;
-        }
-
+        },
+        redirect() {
+            return '/dashboard'
+        },
     },
 };
