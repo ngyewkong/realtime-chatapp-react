@@ -6,8 +6,14 @@
     - TypeScript
     - Next.js
     - TailwindCSS
+    - NextAuth (to handle OAuth)
     - WebSockets
-    - Redis (In-Mem Cache)
+    - Redis (Using Upstash)
+
+## Generating own secret key for use in Next Auth decrypt of JWT
+
+    - openssl genrsa 2048 in terminal
+    - store in .env file
 
 ## Next.js Routing (Filebased System instead of Client Side)
 
