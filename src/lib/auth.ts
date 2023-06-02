@@ -51,6 +51,7 @@ function getDiscordCredentials() {
 const scopes = ['identify'].join(' ');
 
 // adapter: handles auth data persistence in database
+// helps to store all the useful user data from login into redis
 // NextAuthOptions is a type that defines the options that we can pass to NextAuth
 export const authOptions: NextAuthOptions = {
     adapter: UpstashRedisAdapter(db),
