@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 
 import Button from '@/components/ui/Button'
@@ -15,6 +16,7 @@ const page: FC<pageProps> = ({ }) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isDiscordLoading, setIsDiscordLoading] = useState<boolean>(false);
+    const [isAzureLoading, setIsAzureLoading] = useState<boolean>(false);
 
     async function loginWithGoogle() {
         // set loading state to true
@@ -43,6 +45,21 @@ const page: FC<pageProps> = ({ }) => {
         } finally {
             // set loading state to false
             setIsDiscordLoading(false);
+        }
+    }
+
+    async function loginWithAzure() {
+        // set loading state to true
+        setIsAzureLoading(true);
+        try {
+            // using signIn from next-auth/react lib to sign in with google
+            await signIn('azure-ad');
+        } catch (error) {
+            // display error message to user
+            toast.error("Something went wrong with your Microsoft O365 login!");
+        } finally {
+            // set loading state to false
+            setIsAzureLoading(false);
         }
     }
 
@@ -97,7 +114,7 @@ const page: FC<pageProps> = ({ }) => {
                     type='button'
                     className='max-w-sm mx-auto w-full'
                     onClick={loginWithDiscord}>
-                    {isLoading ? null : (<svg
+                    {isDiscordLoading ? null : (<svg
                         className='mr-2 h-4 w-4'
                         aria-hidden='true'
                         focusable='false'
@@ -112,6 +129,27 @@ const page: FC<pageProps> = ({ }) => {
                         />
                     </svg>)}
                     Discord
+                </Button>
+                <Button
+                    isLoading={isAzureLoading}
+                    type='button'
+                    className='max-w-sm mx-auto w-full'
+                    onClick={loginWithAzure}>
+                    {isAzureLoading ? null : (<svg
+                        className='mr-2 h-4 w-4'
+                        aria-hidden='true'
+                        focusable='false'
+                        data-prefix='fab'
+                        data-icon='github'
+                        role='img'
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 16 16'>
+                        <path
+                            d="M7.462 0H0v7.19h7.462V0zM16 0H8.538v7.19H16V0zM7.462 8.211H0V16h7.462V8.211zm8.538 0H8.538V16H16V8.211z"
+                            fill='#00A1F1'
+                        />
+                    </svg>)}
+                    Microsoft O365
                 </Button>
             </div>
         </div>
