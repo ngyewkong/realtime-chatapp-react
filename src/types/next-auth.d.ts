@@ -4,9 +4,12 @@ import type { JWT } from "next-auth/jwt";
 type UserId = string;
 
 // declare module jwt from next-auth
+// need to set image to be of type string since we are getting from google
+// if not set, the default is for token to use picture as variable for image
 declare module 'next-auth/jwt' {
     interface JWT {
         id: UserId;
+        image: string;
     }
 } 
 

@@ -1,11 +1,13 @@
 import { Icon, Icons } from '@/components/Icons'
 import { authOptions } from '@/lib/auth'
-import { Link } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import { FC, ReactNode } from 'react'
 import Image from 'next/image'
 import SignOutButton from '@/components/SignOutButton'
+import FriendRequestsSidebarOption from '@/components/FriendRequestsSidebarOption'
+import Link from 'next/link'
+import { fetchRedis } from '@/helpers/redis'
 
 interface LayoutProps {
     children: ReactNode
@@ -39,6 +41,17 @@ const Layout = async ({ children }: LayoutProps) => {
         return notFound();
     }
 
+    // unseenRequestCount logic
+    // use fetchRedis to get the unseen friend requests
+    // incoming_friend_request is the set that contains all the friend requests
+    // fetchRedis return an object, so need to cast it to User[] to get the length
+    const unseenRequestCount = (
+        await fetchRedis(
+            'smembers',
+            `user:${session.user.id}:incoming_friend_request`
+        ) as User[]
+    ).length;
+
     // layout
     return (
         <div className='w-full flex h-screen'>
@@ -53,12 +66,13 @@ const Layout = async ({ children }: LayoutProps) => {
                 {/* sidebar content - display actual chat information */}
                 <nav className='flex flex-1 flex-col'>
                     <ul role='list' className='flex flex-1 flex-col gap-y-7'>
-                        <li>/ Chats that this user has /</li>
+                        <li>/ Placeholder - Chats that this user has /</li>
                         <li>
                             <div className='text-xs font-semibold leading-6 text-gray-400'>
                                 Overview
                             </div>
-                            {/* sidebar content - display user actions that user can perform */}
+                            {/* sidebar content - display user actions that user can perform
+                                1st user action - add friend */}
                             <ul role='list' className='-mx-2 mt-2 space-y-1'>
                                 {sideBarOptions.map((option) => {
                                     const Icon = Icons[option.Icon]
@@ -77,8 +91,17 @@ const Layout = async ({ children }: LayoutProps) => {
                                     )
                                 })}
                             </ul>
+                            {/* 2nd user action - friend requests navigation 
+                            client component */}
+                            <li className='-mx-2 mt-2 space-y-1'>
+                                <FriendRequestsSidebarOption sessionId={session.user.id} initialUnseenRequestCount={unseenRequestCount} />
+                            </li>
                         </li>
-                        {/* sidebar content - user profile information at bottom of sidebar */}
+
+
+
+
+                        {/* sidebar content - user profile information at bottom of sidebar with signout button */}
                         <li className='-mx-6 mt-auto flex items-center'>
                             <div className='flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900'>
                                 <div className='relative h-8 w-8 bg-gray-50'>
@@ -106,6 +129,7 @@ const Layout = async ({ children }: LayoutProps) => {
                     </ul>
                 </nav>
             </div>
+
             {/* main content - outside of the sidebar */}
             {children}
         </div>
