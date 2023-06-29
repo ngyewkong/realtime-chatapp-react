@@ -8,6 +8,8 @@ import SignOutButton from '@/components/SignOutButton'
 import FriendRequestsSidebarOption from '@/components/FriendRequestsSidebarOption'
 import Link from 'next/link'
 import { fetchRedis } from '@/helpers/redis'
+import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
+import SidebarChatList from '@/components/SidebarChatList'
 
 interface LayoutProps {
     children: ReactNode
@@ -41,6 +43,10 @@ const Layout = async ({ children }: LayoutProps) => {
         return notFound();
     }
 
+    // get friends by user id
+    // function in helpers
+    const friends = await getFriendsByUserId(session.user.id);
+
     // unseenRequestCount logic
     // use fetchRedis to get the unseen friend requests
     // incoming_friend_request is the set that contains all the friend requests
@@ -62,11 +68,18 @@ const Layout = async ({ children }: LayoutProps) => {
                     <Icons.Logo className='h-8 w-auto text-indigo-600' />
                 </Link>
                 {/* sidebar content - display chat information */}
-                <div className='text-xs font-semibold leading-6 text-gray-400'>Your Chats</div>
+                {/* show friend list if there is more than 1 friend */}
+                {friends.length > 0 ?
+                    (<div className='text-xs font-semibold leading-6 text-gray-400'>Your Chats</div>)
+                    : null}
                 {/* sidebar content - display actual chat information */}
                 <nav className='flex flex-1 flex-col'>
                     <ul role='list' className='flex flex-1 flex-col gap-y-7'>
                         <li>/ Placeholder - Chats that this user has /</li>
+                        {/* actual sidebar chat friend list component - client component */}
+                        <li>
+                            <SidebarChatList sessionId={session.user.id} friends={friends} />
+                        </li>
                         <li>
                             <div className='text-xs font-semibold leading-6 text-gray-400'>
                                 Overview
