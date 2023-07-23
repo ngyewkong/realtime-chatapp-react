@@ -24,10 +24,10 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
         setIsLoading(true);
 
         try {
-            // mock a fake succ post req
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            // // mock a fake succ post req
+            // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-            // await axios.post('/api/message/send', { text: input, chatId: chatId });
+            await axios.post('/api/message/send', { text: input, chatId: chatId });
 
             // set input back to empty
             setInput('');

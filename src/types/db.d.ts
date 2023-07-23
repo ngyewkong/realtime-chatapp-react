@@ -9,7 +9,7 @@ interface Message {
     id: string,
     senderId: string,
     receiverId: string,
-    message: string,
+    text: string,
     timestamp: number,
 }
 
