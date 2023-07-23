@@ -1,6 +1,8 @@
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
+import { toPusherKey } from "@/lib/util";
 import { addFriendValidator } from "@/lib/validations/add-friend";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
@@ -63,6 +65,20 @@ export async function POST(req: Request) { // for POST requests (addFriend)
         if (isAlreadyFriends) {
             return new Response("Already friends with this user", { status: 400 });
         }
+
+        // before persisting the friend request data to db
+        // use pusherServer to notify all clients that firends has been added 
+        // .trigger() takes in 3 arguments
+        // the redis path
+        // the function that was used to bind the pusherClient
+        // the actual data 
+        pusherServer.trigger(
+            toPusherKey(`user:${idToAdd}:incoming_friend_request`), 'incoming_friend_request',
+            {
+                senderId: session.user.id,
+                senderEmail: session.user.email,
+            }
+        )
 
         // after all the validation, send the add friend request
         // able to call db here because POST are not cached by default only GET

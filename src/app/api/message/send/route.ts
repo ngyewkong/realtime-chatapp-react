@@ -1,6 +1,8 @@
 import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
+import { toPusherKey } from "@/lib/util";
 import { Message, messageSchema } from "@/lib/validations/message";
 import { nanoid } from "nanoid";
 import { getServerSession } from "next-auth";
@@ -52,6 +54,10 @@ export async function POST(req: Request) {
         }
 
         const actualMessage = messageSchema.parse(messageData);
+
+        // add to client before persisting in db
+        // notify all connected chat room clients
+        pusherServer.trigger(toPusherKey(`chat:${chatId}:messages`), 'incoming-message', actualMessage);
 
         // all validations passed, send the message
         // persist in db -> zadd: add to a sorted list

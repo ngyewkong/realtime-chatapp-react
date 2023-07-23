@@ -1,8 +1,10 @@
 'use client'
+import { pusherClient } from '@/lib/pusher'
+import { toPusherKey } from '@/lib/util'
 // this requires client side rendering
 import { User } from 'lucide-react'
 import Link from 'next/link'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 interface FriendRequestsSidebarOptionProps {
     sessionId: string,
@@ -18,6 +20,31 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({ ses
     const [unseenFriendRequestCount, setUnseenFriendRequestCount] = useState<number>(
         initialUnseenRequestCount,
     )
+
+    useEffect(() => {
+        // use pusher client to subscribe for incoming friend request for each user
+        // using utils helper function to replace : to __
+        pusherClient.subscribe(toPusherKey(
+            `user:${sessionId}:incoming_friend_request`
+        ));
+
+        // tell Pusher to bind the incoming_friend_request to a frontend function 
+        // friendRequestHandler
+
+        const friendRequestHandler = () => {
+            // do not need the data as we just updating the friend req count 
+            setUnseenFriendRequestCount((prev) => prev + 1)
+        }
+        pusherClient.bind('incoming_friend_request', friendRequestHandler);
+
+        return () => {
+            // cleanup after the action/s are done
+            pusherClient.unsubscribe(toPusherKey(
+                `user:${sessionId}:incoming_friend_request`
+            ));
+            pusherClient.unbind('incoming_friend_request', friendRequestHandler);
+        }
+    }, [])
 
     // handle the side notifcation of count after the Friend Requests p tag
     return (<Link href='/dashboard/requests' className='text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'>

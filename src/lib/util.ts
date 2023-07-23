@@ -12,3 +12,9 @@ export function chatHrefConstructor (id1:string, id2:string) {
     const sortedIds = [id1, id2].sort();
     return `${sortedIds[0]}--${sortedIds[1]}`;
 }
+
+// helper function to map : to __ to use in Pusher 
+// Pusher do not take : as arguments -> while redis uses it
+export function toPusherKey(key: string) {
+    return key.replace(/:/g, '__')
+}
