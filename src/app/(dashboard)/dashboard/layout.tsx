@@ -144,7 +144,7 @@ const Layout = async ({ children }: LayoutProps) => {
             </div>
 
             {/* main content - outside of the sidebar */}
-            {children}
+            <aside className='max-h-screen container py-16 md:py-12 w-full'>{children}</aside>
         </div>
     )
 }

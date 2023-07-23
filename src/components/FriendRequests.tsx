@@ -1,9 +1,11 @@
 'use client'
+import { pusherClient } from '@/lib/pusher'
+import { toPusherKey } from '@/lib/util'
 import axios from 'axios'
 import { Check, UserPlus, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 // this requires client side rendering
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 interface FriendRequestsProps {
     incomingFriendRequests: IncomingFriendRequest[],
@@ -18,6 +20,30 @@ const FriendRequests: FC<FriendRequestsProps> = ({ incomingFriendRequests, sessi
 
     // import and use the useRouter hook from next/navigation
     const router = useRouter();
+
+    useEffect(() => {
+        // use pusher client to subscribe for incoming friend request for each user
+        // using utils helper function to replace : to __
+        pusherClient.subscribe(toPusherKey(
+            `user:${sessionId}:incoming_friend_request`
+        ));
+
+        // tell Pusher to bind the incoming_friend_request to a frontend function 
+        // friendRequestHandler
+
+        const friendRequestHandler = ({ senderId, senderEmail }: IncomingFriendRequest) => {
+            setFriendRequests((prev) => [...prev, { senderId, senderEmail }])
+        }
+        pusherClient.bind('incoming_friend_request', friendRequestHandler);
+
+        return () => {
+            // cleanup after the action/s are done
+            pusherClient.unsubscribe(toPusherKey(
+                `user:${sessionId}:incoming_friend_request`
+            ));
+            pusherClient.unbind('incoming_friend_request', friendRequestHandler);
+        }
+    }, [])
 
     // functions to handle the friend requests (accept or reject)
     const handleAcceptFriendRequest = async (senderId: string) => {

@@ -7,7 +7,7 @@
     - Next.js
     - TailwindCSS
     - NextAuth (to handle OAuth)
-    - WebSockets
+    - WebSockets (Using Pusher)
     - Redis (Using Upstash)
 
 ## Generating own secret key for use in Next Auth decrypt of JWT

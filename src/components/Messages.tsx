@@ -1,24 +1,53 @@
 'use client'
 
-import { cn } from '@/lib/util';
+import { pusherClient } from '@/lib/pusher';
+import { cn, toPusherKey } from '@/lib/util';
 import { Message } from '@/lib/validations/message';
 import { format } from 'date-fns';
 import Image from 'next/image';
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
 interface MessagesProps {
     initialMessages: Message[],
     sessionId: string,
+    chatId: string,
     sessionImg: string | null | undefined,
     otherUser: User
 }
 
-const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, sessionImg, otherUser }) => {
+const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, chatId, sessionImg, otherUser }) => {
 
     // initial messages as we will add more messages to the page
     // need to use state to render the messages
     // initialising the state with the initialMessages prop
     const [messages, setMessages] = useState<Message[]>(initialMessages);
+
+    // handle real time messaging using useEffect
+    useEffect(() => {
+        // use pusher client to subscribe for incoming friend request for each user
+        // using utils helper function to replace : to __
+        pusherClient.subscribe(toPusherKey(
+            `chat:${chatId}:messages`
+        ));
+
+        // tell Pusher to bind the incoming_message to a frontend function 
+        // messageHandler to handle real time update of message
+        // since messages are in reversed order
+        // we need to add to the front of the message array
+
+        const messageHandler = (message: Message) => {
+            setMessages((prev) => [message, ...prev]);
+        }
+        pusherClient.bind('incoming-message', messageHandler);
+
+        return () => {
+            // cleanup after the action/s are done
+            pusherClient.unsubscribe(toPusherKey(
+                `chat:${chatId}:messages`
+            ));
+            pusherClient.unbind('incoming-message', messageHandler);
+        }
+    }, [])
 
     // rmb the content messages are in reverse chronological order
     // we want to scroll to the bottom of the page when we receive a new message
