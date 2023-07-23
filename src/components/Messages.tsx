@@ -47,7 +47,7 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, chatId, sessi
             ));
             pusherClient.unbind('incoming-message', messageHandler);
         }
-    }, [])
+    }, [chatId])
 
     // rmb the content messages are in reverse chronological order
     // we want to scroll to the bottom of the page when we receive a new message
