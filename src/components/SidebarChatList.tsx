@@ -1,12 +1,22 @@
 'use client'
 
-import { chatHrefConstructor } from '@/lib/util';
+import { pusherClient } from '@/lib/pusher';
+import { chatHrefConstructor, toPusherKey } from '@/lib/util';
+import { Message } from '@/lib/validations/message';
 import { usePathname, useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast';
+import UnseenChatToast from './UnseenChatToast';
 
 interface SidebarChatListProps {
   friends: User[],
   sessionId: string,
+}
+
+// extended Message interface
+interface ExtendedMessage extends Message {
+  senderImg: string,
+  senderName: string,
 }
 
 // friends list should not flood over the whole sidebar for users with a lot of friends
@@ -21,6 +31,57 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ sessionId, friends }) => {
   // set up state to track unseen messages
   // initial value is an empty array
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
+
+  // handle realtime notification when new chat messages are sent
+  useEffect(() => {
+    pusherClient.subscribe(
+      toPusherKey(`user:${sessionId}:chats`)
+    );
+    pusherClient.subscribe(
+      toPusherKey(`user:${sessionId}:friends`)
+    );
+
+    const newMessagehandler = (message: ExtendedMessage) => {
+      console.log("logging", message);
+      // only send toast notifications if user is not in the chat screen with the sender
+      const shouldNotify = pathname !== `/dashboard/chat/${chatHrefConstructor(sessionId, message.senderId)}`;
+
+      if (!shouldNotify) {
+        return
+      }
+
+      // should notify 
+      toast.custom((t) => (
+        // impl custom notification component
+        <UnseenChatToast
+          t={t}
+          sessionId={sessionId}
+          senderId={message.senderId}
+          senderImg={message.senderImg}
+          senderMessage={message.text}
+          senderName={message.senderName}
+        />
+      ))
+
+      setUnseenMessages((prev) => [...prev, message])
+    }
+
+    const newFriendHandler = () => {
+      // just need to reload the window without hard reload
+      router.refresh();
+    }
+
+    // bind the new events
+    pusherClient.bind('new-message', newMessagehandler)
+    pusherClient.bind('new-friend', newFriendHandler)
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`));
+      pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`));
+    }
+    // setting the dependency array so that useEffect tracks if user went from chat screen to another page
+    // and the toast notif will still behave correctly and send out notification
+  }, [pathname, sessionId, router])
 
   // useEffect to update the unseenMessages state
   // with dependency array on pathname

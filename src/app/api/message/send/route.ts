@@ -59,6 +59,13 @@ export async function POST(req: Request) {
         // notify all connected chat room clients
         pusherServer.trigger(toPusherKey(`chat:${chatId}:messages`), 'incoming-message', actualMessage);
 
+        // to listen for one event instead of spinning up multiple websockets instances
+        pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), 'new-message', {
+            ...actualMessage,
+            senderImg: sender.image,
+            senderName: sender.name,
+        })
+
         // all validations passed, send the message
         // persist in db -> zadd: add to a sorted list
         // score is the sorting condition
