@@ -43,7 +43,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({ incomingFriendRequests, sessi
             ));
             pusherClient.unbind('incoming_friend_request', friendRequestHandler);
         }
-    }, [])
+    }, [sessionId, router])
 
     // functions to handle the friend requests (accept or reject)
     const handleAcceptFriendRequest = async (senderId: string) => {
