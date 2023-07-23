@@ -1,14 +1,19 @@
 'use client'
+
 import { cn } from '@/lib/util';
 import { Message } from '@/lib/validations/message';
+import { format } from 'date-fns';
+import Image from 'next/image';
 import { FC, useRef, useState } from 'react'
 
 interface MessagesProps {
     initialMessages: Message[],
     sessionId: string,
+    sessionImg: string | null | undefined,
+    otherUser: User
 }
 
-const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
+const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, sessionImg, otherUser }) => {
 
     // initial messages as we will add more messages to the page
     // need to use state to render the messages
@@ -20,6 +25,12 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
     // using useRef -> client side rendering component
 
     const scrollDownRef = useRef<HTMLDivElement | null>(null);
+
+    // timestamp convert to HH:MM using date-fns helper package
+    const formatTimestamp = (timestamp: number) => {
+        return format(timestamp, 'HH:mm')
+    }
+
     return (
         <div id='messages' className='flex h-full flex-1 flex-col-reverse gap-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch'>
             <div ref={scrollDownRef} />
@@ -49,11 +60,25 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
                                     'bg-indigo-600 text-white': isCurrentUser,
                                     'bg-gray-200 text-gray-900': !isCurrentUser,
                                     'rounded-br-none': !hasNewMessageFromSameUser && isCurrentUser,
-                                    'rounded-bl-none': hasNewMessageFromSameUser && !isCurrentUser,
+                                    'rounded-bl-none': !hasNewMessageFromSameUser && !isCurrentUser,
                                 })}>
                                     {message.text}{' '}
-                                    <span className='ml-2 text-xs text-gray-400'>timestamp</span>
+                                    <span className='ml-2 text-xs text-gray-400'>{formatTimestamp(message.timestamp)}</span>
                                 </span>
+                            </div>
+
+                            <div className={cn('relative w-6 h-6', {
+                                'order-2': isCurrentUser,
+                                'order-1': !isCurrentUser,
+                                'invisible': hasNewMessageFromSameUser
+                            })}>
+                                <Image
+                                    fill
+                                    src={isCurrentUser ? (sessionImg as string) : otherUser.image}
+                                    alt='Profile Picture'
+                                    referrerPolicy='no-referrer'
+                                    className='rounded-full'
+                                />
                             </div>
                         </div>
                     </div>)

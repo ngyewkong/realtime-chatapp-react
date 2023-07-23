@@ -2,13 +2,12 @@ import ChatInput from '@/components/ChatInput';
 import Messages from '@/components/Messages';
 import { fetchRedis } from '@/helpers/redis';
 import { authOptions } from '@/lib/auth';
-import { db } from '@/lib/db';
 import { messageArraySchema } from '@/lib/validations/message';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { FC } from 'react'
 
+// [chatId] folder -> params hold chatId props
 interface PageProps {
   params: {
     chatId: string,
@@ -31,15 +30,15 @@ async function getChatMessages(chatId: string) {
     // take the result and parse it into a Message object
     // most recent messages at the top
     const messages = result.map((message) => {
-      JSON.parse(message) as Message;
+      return JSON.parse(message) as Message;
     })
-
     // display the messages in reverse order (reverse chronological order)
     // most recent messages at the bottom
     const reversedMessages = messages.reverse();
 
     // validate the messages
     const chatMessages = messageArraySchema.parse(reversedMessages);
+    console.log("chat message in function: " + chatMessages[0]);
 
     return chatMessages;
 
@@ -78,10 +77,19 @@ const page = async ({ params }: PageProps) => {
 
   // use ternary operator to find which chatId is the current user
   const otherUserId = user.id === userId1 ? userId2 : userId1;
-  const otherUser = (await db.get(`user:${otherUserId}`)) as User;
+  console.log("otherUser: " + otherUserId);
+
+  const otherUserJSON = (await fetchRedis(
+    'get',
+    `user:${otherUserId}`
+  )) as string
+
+  const otherUser = JSON.parse(otherUserJSON) as User
+  // const otherUser = (await db.get(`user:${otherUserId}`)) as User;
 
   // get the chat messages
   const chatMessages = await getChatMessages(chatId);
+  console.log("chat message: " + chatMessages);
 
   // css styling for that chat div for the actual chat messages
   return <div className='flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-6rem)]'>
@@ -112,8 +120,9 @@ const page = async ({ params }: PageProps) => {
     </div>
 
     {/* Message Component to handle chat messages */}
-    <Messages initialMessages={chatMessages} sessionId={session.user.id} />
-    <ChatInput />
+    <div>{params.chatId}</div>
+    <Messages initialMessages={chatMessages} sessionId={session.user.id} otherUser={otherUser} sessionImg={session.user.image} />
+    <ChatInput chatId={chatId} chatPartner={otherUser} />
   </div>
 }
 
