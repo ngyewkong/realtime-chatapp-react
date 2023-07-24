@@ -16,7 +16,7 @@ const SignOutButton: FC<SignOutButtonProps> = ({ ...props }) => {
         setIsSigningOut(true);
         try {
             // set callbackUrl 
-            await signOut({ callbackUrl: 'http://localhost:3000/login' });
+            await signOut();
         } catch (error) {
             toast.error("Something went wrong with your logout!");
         } finally {

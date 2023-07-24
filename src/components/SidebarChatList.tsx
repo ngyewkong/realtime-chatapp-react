@@ -76,8 +76,12 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ sessionId, friends }) => {
     pusherClient.bind('new-friend', newFriendHandler)
 
     return () => {
+      // cleanup - unsubscribe and unbind
       pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`));
       pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`));
+
+      pusherClient.unbind('new-message', newMessagehandler)
+      pusherClient.unbind('new-friend', newFriendHandler)
     }
     // setting the dependency array so that useEffect tracks if user went from chat screen to another page
     // and the toast notif will still behave correctly and send out notification

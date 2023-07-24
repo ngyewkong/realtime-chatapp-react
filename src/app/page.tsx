@@ -1,12 +1,8 @@
-import Button from "@/components/ui/Button";
-import { db } from "@/lib/db";
+"use client"
 
-export default async function Home() {
+import Button from '@/components/ui/Button'
+import { signOut } from 'next-auth/react'
 
-  // await db.set('hello', 'world')
-
-  return (
-    // create a button and use the custom variant we created ghost to make it transparent and appear when hovered
-    <Button variant={'ghost'}>Click Me</Button>
-  )
+export default function Home() {
+  return <button onClick={() => signOut()}>Sign out</button>
 }
