@@ -40,7 +40,7 @@ export default withAuth(
         // handle the case for pathname / & redirect to dashboard
         if (pathname === "/") {
             // redirect the user to login page
-            return NextResponse.redirect(new URL("/login", req.url));
+            return NextResponse.redirect(new URL("/dashboard", req.url));
         }
     }, {
         // handle callback to prevent too many redirects

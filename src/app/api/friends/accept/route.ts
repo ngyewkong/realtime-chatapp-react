@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { fetchRedis } from "@/helpers/redis";
 import { db } from "@/lib/db";
+import { toPusherKey } from "@/lib/util";
+import { pusherServer } from "@/lib/pusher";
 
 
 export async function POST(req: Request) {
@@ -40,6 +42,10 @@ export async function POST(req: Request) {
         if (!hasIncomingFriendRequest) {
             return new Response("No Friend Request", { status: 400 });
         }
+
+        // trigger pusher function to refresh
+        // notify added user
+        pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new-friend', {});
 
         // after validations add user (idToAdd) to friends set of user (session.user.id)
         await db.sadd(`user:${session.user.id}:friends`, idToAdd);
