@@ -74,17 +74,17 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({ }) => {
             <input
                 {...register('email')}
                 type="text"
-                className='block w-full rounded-md border-0 py-1.5 text-gray-900 
-                shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                focus:ring-2 focus:ring-inset focus:ring-indigo-600
+                className='block w-full rounded-md border-0 py-1.5 text-lightinline dark:text-darkinline
+                shadow-sm ring-1 ring-inset ring-lightprimarysubtle dark:ring-darkprimarysubtle placeholder:text-gray
+                focus:ring-2 focus:ring-inset focus:ring-lightinteractive dark:focus:ring-darkinteractive
                 sm:text-sm sm:leading-6'
                 placeholder='johndoe@email.com' />
             <Button>Add</Button>
         </div>
         {/** p tag to handle display of errors */}
-        <p className='mt-1 text-red-600 text-sm'>{errors.email?.message}</p>
+        <p className='mt-1 text-wrong text-sm'>{errors.email?.message}</p>
         {/** p tag to handle display of success message only if success state is true then render */}
-        {showSuccessState ? (<p className='mt-1 text-green-600 text-sm'>Friend Request sent!</p>) : null}
+        {showSuccessState ? (<p className='mt-1 text-correct text-sm'>Friend Request sent!</p>) : null}
     </form>
 }
 

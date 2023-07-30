@@ -4,7 +4,7 @@ import { FC } from 'react'
 const page: FC = () => {
     return (
         <main className='pt-8 px-6'>
-            <h1 className='font-bold text-5xl mb-8 text-indigo-600'>Add a Friend to begin chatting.</h1>
+            <h1 className='font-bold text-5xl mb-8 text-lightinteractive dark:text-darkinteractive'>Add a Friend to begin chatting.</h1>
             <AddFriendButton />
         </main>
     )

@@ -114,7 +114,7 @@ const page = async ({ params }: PageProps) => {
             </span>
           </div>
 
-          <span className='text-sm text-gray-600'>{otherUser.email}</span>
+          <span className='text-sm text-lightinline dark:text-darkinline'>{otherUser.email}</span>
         </div>
       </div>
     </div>
