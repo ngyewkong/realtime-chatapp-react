@@ -46,7 +46,7 @@ const page = async ({ }) => {
     // so separating it out into a component with 'use client' side rendering
     return (
         <main className='pt-8 px-6'>
-            <h1 className='font-bold text-5xl mb-8 text-indigo-600'>Your Pending Friend Requests</h1>
+            <h1 className='font-bold text-5xl mb-8 text-lightinteractive dark:text-darkinteractive'>Your Pending Friend Requests</h1>
             <div className='flex flex-col gap-4'>
                 <FriendRequests
                     incomingFriendRequests={incomingFriendRequests}

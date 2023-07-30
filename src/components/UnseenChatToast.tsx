@@ -14,7 +14,7 @@ interface UnseenChatToastProps {
 
 const UnseenChatToast: FC<UnseenChatToastProps> = ({ t, sessionId, senderId, senderImg, senderName, senderMessage }) => {
     return (
-        <div className={cn('max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5',
+        <div className={cn('max-w-md w-full bg-lightprimary dark:bg-darkprimary shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-lightinline dark:ring-darkinline ring-opacity-5',
             {
                 'animate-enter': t.visible,
                 'animate-leave': !t.visible,
@@ -39,16 +39,16 @@ const UnseenChatToast: FC<UnseenChatToastProps> = ({ t, sessionId, senderId, sen
                     </div>
 
                     <div className='ml-3 flex-1'>
-                        <p className='text-sm font-medium text-gray-900'>{senderName}</p>
-                        <p className='mt-1 text-sm text-gray-500'>{senderMessage}</p>
+                        <p className='text-sm font-medium text-darkgray'>{senderName}</p>
+                        <p className='mt-1 text-sm text-gray'>{senderMessage}</p>
                     </div>
                 </div>
             </a>
 
-            <div className='flex border-l border-gray-200'>
+            <div className='flex border-l border-gray'>
                 <button
                     onClick={() => { toast.dismiss(t.id) }}
-                    className='w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500'>
+                    className='w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-lightinteractive dark:text-darkinteractive hover:text-lightinteractive dark:hover:text-darkinteractive focus:outline-none focus:ring-2 focus:ring-lightinteractive dark:focus:ring-darkinteractive'>
                     Close
                 </button>
             </div>

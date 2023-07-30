@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { fetchRedis } from '@/helpers/redis'
 import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
 import SidebarChatList from '@/components/SidebarChatList'
+import DarkModeToggle from '@/components/DarkModeToggle'
 
 interface LayoutProps {
     children: ReactNode
@@ -62,43 +63,47 @@ const Layout = async ({ children }: LayoutProps) => {
     return (
         <div className='w-full flex h-screen'>
             {/* sidebar */}
-            <div className='md:flex h-full w-full max-w-sm grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6'>
+            <div className='md:flex h-full w-full max-w-sm grow flex-col gap-y-5 overflow-y-auto border-r border-lightinline dark:border-darkinline bg-lightprimary dark:bg-darkprimary px-6'>
                 <Link href='/dashboard' className='flex h-16 shrink-0 items-center'>
                     {/* logo */}
-                    <Icons.Logo className='h-8 w-auto text-indigo-600' />
+                    <Icons.Logo className='h-8 w-auto text-darksecondary' />
                 </Link>
                 {/* sidebar content - display chat information */}
+                <div className='text-xs font-semibold leading-6 text-lightinline dark:text-darkinline'>Toggle Light/Dark Theme</div>
+                <div>
+                    <DarkModeToggle />
+                </div>
                 {/* show friend list if there is more than 1 friend */}
                 {friends.length > 0 ?
-                    (<div className='text-xs font-semibold leading-6 text-gray-400'>Your Chats</div>)
+                    (<div className='text-xs font-semibold leading-6 text-lightinline dark:text-darkinline'>Your Chats</div>)
                     : null}
                 {/* sidebar content - display actual chat information */}
                 <nav className='flex flex-1 flex-col'>
-                    <ul role='list' className='flex flex-1 flex-col gap-y-7'>
+                    <ul role='list' className='flex flex-1 flex-col gap-y-7 text-lightinline dark:text-darkinline'>
                         <li>/ Placeholder - Chats that this user has /</li>
                         {/* actual sidebar chat friend list component - client component */}
                         <li>
                             <SidebarChatList sessionId={session.user.id} friends={friends} />
                         </li>
                         <li>
-                            <div className='text-xs font-semibold leading-6 text-gray-400'>
+                            <div className='text-xs font-semibold leading-6 text-lightinline dark:text-darkinline'>
                                 Overview
                             </div>
                             {/* sidebar content - display user actions that user can perform
                                 1st user action - add friend */}
-                            <ul role='list' className='-mx-2 mt-2 space-y-1'>
+                            <ul role='list' className='-mx-2 mt-2 space-y-1 text-lightinline dark:text-darkinline'>
                                 {sideBarOptions.map((option) => {
                                     const Icon = Icons[option.Icon]
                                     return (
                                         <li key={option.id}>
                                             <Link
                                                 href={option.href}
-                                                className='text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-3 rounded-md p-2 text-sm leading-6 font-semibold'>
-                                                <span className='text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-text-[0.625rem] font-medium bg-white'>
+                                                className='text-gray-700 hover:text-lightinteractive dark:hover:text-darkinteractive hover:bg-gray-50 group flex gap-3 rounded-md p-2 text-sm leading-6 font-semibold'>
+                                                <span className='text-lightinline dark:text-darkinline border-gray-200 group-hover:border-lightinteractive group-hover:text-lightinteractive dark:group-hover:border-darkinteractive dark:group-hover:text-darkinteractive flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-text-[0.625rem] font-medium bg-white'>
                                                     <Icon className='h-4 w-4' />
                                                 </span>
 
-                                                <span className='truncate'>{option.name}</span>
+                                                <span className='truncate text-lightinline dark:text-darkinline group-hover:border-lightinteractive group-hover:text-lightinteractive dark:group-hover:border-darkinteractive dark:group-hover:text-darkinteractive'>{option.name}</span>
                                             </Link>
                                         </li>
                                     )
@@ -106,7 +111,7 @@ const Layout = async ({ children }: LayoutProps) => {
                             </ul>
                             {/* 2nd user action - friend requests navigation 
                             client component */}
-                            <li className='-mx-2 mt-2 space-y-1'>
+                            <li className='-mx-2 mt-2 space-y-1 text-lightinline dark:text-darkinline group-hover:border-lightinteractive group-hover:text-lightinteractive dark:group-hover:border-darkinteractive dark:group-hover:text-darkinteractive'>
                                 <FriendRequestsSidebarOption sessionId={session.user.id} initialUnseenRequestCount={unseenRequestCount} />
                             </li>
                         </li>

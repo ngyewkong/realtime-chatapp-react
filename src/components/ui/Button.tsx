@@ -11,9 +11,9 @@ const buttonVariants = cva(
         variants: {
             // whatever you want to name the different variants of buttons
             variant: {
-                default: 'bg-slate-900 text-white hover:bg-slate:800',
-                ghost: 'bg-transparant hover:text-slate-900 hover:bg-slate-200',
-                hover: 'hover:bg-gray-50 hover:border-indigo-600 hover:text-indigo-600',
+                default: 'bg-lightprimary dark:bg-darkprimary text-lightinline dark:text-darkinline hover:bg-lightinteractive dark:hover:bg-darkinteractive ring-lightinteractive dark:ring-darkinteractive ring-1',
+                ghost: 'bg-transparent hover:text-lightinline hover:bg-lightprimary',
+                hover: 'hover:bg-lightprimarysubtle dark:hover:bg-darkprimarysubtle hover:border-lightinteractive dark:hover:border-darkinteractive hover:text-lightinteractive dark:hover:text-darkinteractive',
             },
             size: {
                 default: 'h-10 py-2 px-4',

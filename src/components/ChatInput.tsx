@@ -47,8 +47,8 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
             setIsLoading(false);
         }
     };
-    return <div className='border-t border-gray-200 px-4 pt-4 mb-2 sm:mb-0'>
-        <div className='relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600'>
+    return <div className='border-t bg-lightprimary dark:bg-darkprimary border-lightprimary dark:border-darkprimary px-4 pt-4 mb-2 sm:mb-0'>
+        <div className='bg-lightprimary dark:bg-darkprimary relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-lightprimarysubtle dark:ring-darkprimarysubtle focus-within:ring-2 focus-within:ring-lightinteractive dark:focus-within:ring-darkinteractive'>
             <TextareaAutosize ref={textareaRef} onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -56,7 +56,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
                     sendMessage();
                 }
             }}
-                className='block w-full resize-none border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:py1.5 sm:text-sm sm:leading-6'
+                className='block w-full resize-none border-0 text-lightinline dark:text-darkinline placeholder:text-lightinline dark:placeholder:text-darkinline focus:ring-0 sm:py1.5 sm:text-sm sm:leading-6'
                 rows={1}
                 value={input}
                 placeholder={`Send a message to ${chatPartner.name}`}
@@ -70,7 +70,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
                 </div>
             </div>
 
-            <div className='absolute right-0 bottom-0 flex justify-between py-2 pt-3 pr-2'>
+            <div className='text-lightinline dark:text-darkinline bg-lightprimary dark:bg-darkprimary absolute right-1 bottom-1 flex justify-between py-2 pt-3 pr-2'>
                 <div className='flex-shrink-0'>
                     <Button isLoading={isLoading} onClick={sendMessage} type='submit'>Send</Button>
                 </div>

@@ -86,13 +86,13 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, chatId, sessi
                                 'order-2 items-start': !isCurrentUser,
                             })}>
                                 <span className={cn('px-4 py-2 rounded-lg inline-block', {
-                                    'bg-indigo-600 text-white': isCurrentUser,
-                                    'bg-gray-200 text-gray-900': !isCurrentUser,
+                                    'bg-lightinteractive text-darkinline dark:bg-darkinteractive dark:text-gray': isCurrentUser,
+                                    'bg-darkinteractive text-darkinline dark:bg-lightinteractive dark:text-gray': !isCurrentUser,
                                     'rounded-br-none': !hasNewMessageFromSameUser && isCurrentUser,
                                     'rounded-bl-none': !hasNewMessageFromSameUser && !isCurrentUser,
                                 })}>
                                     {message.text}{' '}
-                                    <span className='ml-2 text-xs text-gray-400'>{formatTimestamp(message.timestamp)}</span>
+                                    <span className='ml-2 text-xs text-darkinline'>{formatTimestamp(message.timestamp)}</span>
                                 </span>
                             </div>
 

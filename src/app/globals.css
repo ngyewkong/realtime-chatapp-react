@@ -4,7 +4,10 @@
 
 @layer base {
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 dark:bg-darkprimary bg-lightprimary dark:text-darkinline text-lightinline;
+  }
+  textarea {
+    @apply bg-transparent;
   }
 }
 
