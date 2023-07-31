@@ -5,14 +5,14 @@ import { cn } from "@/lib/util";
 
 // using class-variance-authority to create variants of buttons for the whole ui
 // cva("TAILWINDCSS CLASSNAME", "VARIANT NAME") to specify the css styling and the variant name
-const buttonVariants = cva(
+export const buttonVariants = cva(
     "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
     {
         variants: {
             // whatever you want to name the different variants of buttons
             variant: {
                 default: 'bg-lightprimary dark:bg-darkprimary text-lightinline dark:text-darkinline hover:bg-lightinteractive dark:hover:bg-darkinteractive ring-lightinteractive dark:ring-darkinteractive ring-1',
-                ghost: 'bg-transparent hover:text-lightinline hover:bg-lightprimary',
+                ghost: 'bg-transparent hover:text-lightinline hover:bg-lightprimary dark:hover:text-darktinline dark:hover:bg-darkprimary',
                 hover: 'hover:bg-lightinteractive dark:hover:bg-darkinteractive hover:border-lightinteractive dark:hover:border-darkinteractive text-lightinline dark:text-darkinline',
             },
             size: {
