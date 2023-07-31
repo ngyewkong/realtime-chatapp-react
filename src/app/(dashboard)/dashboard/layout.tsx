@@ -11,16 +11,11 @@ import { fetchRedis } from '@/helpers/redis'
 import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
 import SidebarChatList from '@/components/SidebarChatList'
 import DarkModeToggle from '@/components/DarkModeToggle'
+import MobileChatLayout from '@/components/MobileChatLayout'
+import { SideBarOption } from '@/types/typing'
 
 interface LayoutProps {
     children: ReactNode
-}
-
-interface SideBarOption {
-    id: number,
-    name: string,
-    href: string,
-    Icon: Icon,
 }
 
 // need to know what user actions are available
@@ -62,8 +57,16 @@ const Layout = async ({ children }: LayoutProps) => {
     // layout
     return (
         <div className='w-full flex h-screen'>
+            <div className='md:hidden'>
+                <MobileChatLayout
+                    friends={friends}
+                    session={session}
+                    sidebarOptions={sideBarOptions}
+                    unseenRequestCount={unseenRequestCount} />
+            </div>
+
             {/* sidebar */}
-            <div className='md:flex h-full w-full max-w-sm grow flex-col gap-y-5 overflow-y-auto border-r border-lightinline dark:border-darkinline bg-lightprimary dark:bg-darkprimary px-6'>
+            <div className='hidden md:flex h-full w-full max-w-sm grow flex-col gap-y-5 overflow-y-auto border-r border-lightinline dark:border-darkinline bg-lightprimary dark:bg-darkprimary px-6'>
                 <Link href='/dashboard' className='flex h-16 shrink-0 items-center'>
                     {/* logo */}
                     <Icons.Logo className='h-8 w-auto text-darksecondary' />
