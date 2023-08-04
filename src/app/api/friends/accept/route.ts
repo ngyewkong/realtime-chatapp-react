@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
         // trigger pusher function to refresh
         // notify added user
-        pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new-friend', {});
+        await pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new-friend', {});
 
         // after validations add user (idToAdd) to friends set of user (session.user.id)
         await db.sadd(`user:${session.user.id}:friends`, idToAdd);

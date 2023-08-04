@@ -57,10 +57,10 @@ export async function POST(req: Request) {
 
         // add to client before persisting in db
         // notify all connected chat room clients
-        pusherServer.trigger(toPusherKey(`chat:${chatId}:messages`), 'incoming-message', actualMessage);
+        await pusherServer.trigger(toPusherKey(`chat:${chatId}:messages`), 'incoming-message', actualMessage);
 
         // to listen for one event instead of spinning up multiple websockets instances
-        pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), 'new-message', {
+        await pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), 'new-message', {
             ...actualMessage,
             senderImg: sender.image,
             senderName: sender.name,
