@@ -72,7 +72,7 @@ export async function POST(req: Request) { // for POST requests (addFriend)
         // the redis path
         // the function that was used to bind the pusherClient
         // the actual data 
-        pusherServer.trigger(
+        await pusherServer.trigger(
             toPusherKey(`user:${idToAdd}:incoming_friend_request`), 'incoming_friend_request',
             {
                 senderId: session.user.id,
