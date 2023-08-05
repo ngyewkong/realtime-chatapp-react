@@ -62,16 +62,16 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({ friends, session, sidebar
                     <div className='flex h-full flex-col overflow-hidden bg-lightprimary dark:bg-darkprimary py-6 shadow-xl'>
                       <div className='px-4 sm:px-6'>
                         <div className='flex items-start justify-between'>
-                          <Dialog.Title className='text-base font-semibold leading-6 text-lightinline dark:text-darkprimarysubtle'>
+                          <Dialog.Title className='text-base font-semibold leading-6 text-lightinteractive dark:text-darkinteractive'>
                             Dashboard
                           </Dialog.Title>
                           <div className='ml-3 flex h-7 items-center'>
                             <button
                               type='button'
-                              className='rounded-md bg-lightprimary dark:bg-darkprimary text-gray hover:text-darkgray focus:outline-none focus:ring-2 focus:ring-lightinteractive dark:focus:ring-darkinteractive focus:ring-offset-2'
+                              className='rounded-md bg-lightprimary dark:bg-darkprimary border-lightinteractive hover:border-darkinteractive focus:outline-none focus:ring-2 focus:ring-lightinteractive dark:focus:ring-darkinteractive focus:ring-offset-2'
                               onClick={() => setOpen(false)}>
                               <span className='sr-only'>Close panel</span>
-                              <X className='h-6 w-6 text-lightinline dark:text-darkprimarysubtle' aria-hidden='true' />
+                              <X className='h-6 w-6 text-lightinteractive dark:text-darkinteractive' aria-hidden='true' />
                             </button>
                           </div>
                         </div>
@@ -82,7 +82,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({ friends, session, sidebar
                           <DarkModeToggle />
                         </div>
                         {friends.length > 0 ? (
-                          <div className='text-xs font-semibold leading-6 text-lightinline dark:text-darkprimarysubtle'>
+                          <div className='text-xs font-semibold leading-6 text-lightinteractive dark:text-darkinteractive'>
                             Your chats
                           </div>
                         ) : null}
@@ -99,7 +99,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({ friends, session, sidebar
                             </li>
 
                             <li>
-                              <div className='text-xs font-semibold leading-6 text-lightinline dark:text-darkinline'>
+                              <div className='text-xs font-semibold leading-6 text-lightinteractive dark:text-darkinteractive'>
                                 Overview
                               </div>
                               <ul role='list' className='-mx-2 mt-2 space-y-1'>

@@ -13,7 +13,7 @@ export const buttonVariants = cva(
             variant: {
                 default: 'bg-lightprimary dark:bg-darkprimary text-lightinline dark:text-darkinline hover:bg-lightinteractive dark:hover:bg-darkinteractive ring-lightinteractive dark:ring-darkinteractive ring-1',
                 ghost: 'bg-transparent hover:text-lightinline hover:bg-lightprimary dark:hover:text-darktinline dark:hover:bg-darkprimary',
-                hover: 'hover:bg-lightinteractive dark:hover:bg-darkinteractive hover:border-lightinteractive dark:hover:border-darkinteractive text-lightinline dark:text-darkinline',
+                hover: 'hover:bg-lightinteractive dark:hover:bg-darkinteractive hover:border-lightinteractive dark:hover:border-darkinteractive text-lightinline dark:text-darkinline ring-lightinteractive dark:ring-darkinteractive ring-1',
             },
             size: {
                 default: 'h-10 py-2 px-4',
