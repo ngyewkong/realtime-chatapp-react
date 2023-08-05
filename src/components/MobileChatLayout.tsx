@@ -109,7 +109,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({ friends, session, sidebar
                                     <li key={option.name}>
                                       <Link
                                         href={option.href}
-                                        className='text-lightinline dark:text-darkinline hover:text-lightinteractive dark:hover:text-darkinteractive hover:bg-gray group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'>
+                                        className='text-lightinline dark:text-darkinline hover:text-lightinteractive dark:hover:text-darkinteractive hover:border-lightinteractive dark:hover:border-darkinteractive group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'>
                                         <span className='text-lightinline dark:text-darkinline group-hover:border-lightinteractive dark:group-hover:border-darkinteractive group-hover:text-lightinteractive dark:group-hover:text-darkinteractive flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-lightprimary dark:bg-darkprimary'>
                                           <Icon className='h-4 w-4' />
                                         </span>
@@ -134,7 +134,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({ friends, session, sidebar
 
                             <li className='-ml-6 mt-auto flex items-center'>
                               <div className='flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-lightinline dark:text-darkinline'>
-                                <div className='relative h-8 w-8 bg-gray'>
+                                <div className='relative h-8 w-8'>
                                   <Image
                                     fill
                                     referrerPolicy='no-referrer'
@@ -150,7 +150,7 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({ friends, session, sidebar
                                     {session.user.name}
                                   </span>
                                   <span
-                                    className='text-xs text-lightinline dark:text-darkinline'
+                                    className='text-xs text-darkgray dark:text-gray'
                                     aria-hidden='true'>
                                     {session.user.email}
                                   </span>
