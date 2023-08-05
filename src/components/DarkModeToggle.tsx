@@ -36,7 +36,7 @@ const DarkModeToggle: FC<DarkModeToggleProps> = ({ }) => {
     };
 
     return (
-        <div className="inline-flex items-center justify-center border-2 rounded-lg hover:bg-lightinteractive dark:hover:bg-darkinteractive border-lightinteractive dark:border-darkinteractive">
+        <div className="inline-flex items-center justify-center border rounded-lg hover:bg-lightinteractive dark:hover:bg-darkinteractive border-lightinteractive dark:border-darkinteractive">
             <DarkModeSwitch
                 style={{
                     marginLeft: "0.5rem",
@@ -55,9 +55,9 @@ const DarkModeToggle: FC<DarkModeToggleProps> = ({ }) => {
             {/* tailwindcss utility works from smallest to largest screensize */}
             {/* hidden -> mobile screen hide the text */}
             {/* uppercase md:inline-flex text-sm -> medium screen size show text in uppercase, small font and gray color */}
-            <div id="navbartext" className="cursor-none uppercase hidden md:inline-flex text-sm text-lightinline dark:text-darkinline mx-4">
+            {/* <div id="navbartext" className="cursor-none uppercase hidden md:inline-flex text-sm text-lightinline dark:text-darkinline mx-4">
                 <span className="mx-1">{colorTheme === "light" ? "In Dark Mode!" : "In Light Mode!"}</span>
-            </div>
+            </div> */}
         </div>
     )
 }

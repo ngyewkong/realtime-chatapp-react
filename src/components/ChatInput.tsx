@@ -47,8 +47,8 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
             setIsLoading(false);
         }
     };
-    return <div className='border-t bg-lightprimary dark:bg-darkprimary border-lightprimary dark:border-darkprimary px-4 pt-4 mb-2 sm:mb-0'>
-        <div className='bg-lightprimary dark:bg-darkprimary relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-lightprimarysubtle dark:ring-darkprimarysubtle focus-within:ring-2 focus-within:ring-lightinteractive dark:focus-within:ring-darkinteractive'>
+    return <div className='border-t-2 bg-lightprimary dark:bg-darkprimary border-lightinteractive dark:border-darkinteractive px-4 pt-4 mb-2 sm:mb-0'>
+        <div className='bg-lightprimary dark:bg-darkprimary relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-darkprimary dark:ring-darkprimarysubtle focus-within:ring-2 focus-within:ring-lightinteractive dark:focus-within:ring-darkinteractive'>
             <TextareaAutosize ref={textareaRef} onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
