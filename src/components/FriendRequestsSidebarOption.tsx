@@ -60,14 +60,14 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({ ses
     }, [sessionId])
 
     // handle the side notifcation of count after the Friend Requests p tag
-    return (<Link href='/dashboard/requests' className='text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'>
-        <div className='text-lightinline dark:text-darkinline border-lightprimary dark:border-darkprimary group-hover:border-lightinteractive dark:group-hover:border-darkinteractive group-hover:text-lightinteractive dark:group-hover:text-darkinteractive flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-text-[0.625rem] font-medium bg-white'>
+    return (<Link href='/dashboard/requests' className='border-lightinline dark:border-darkinline hover:text-lightinteractive dark:hover:text-darkinteractive hover:border-lightinteractive dark:hover:border-darkinteractive group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'>
+        <div className='text-lightinline dark:text-darkinline group border-lightinline dark:border-darkinline group-hover:border-lightinteractive dark:group-hover:border-darkinteractive group-hover:text-lightinteractive dark:group-hover:text-darkinteractive flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-text-[0.625rem] font-medium ring-lightinline dark:ring-darkinline'>
             <User className='h-4 w-4' />
         </div>
         <p className='truncate group-hover:border-lightinteractive dark:group-hover:border-darkinteractive group-hover:text-lightinteractive dark:group-hover:text-darkinteractive'>Friend Requests</p>
 
         {unseenFriendRequestCount > 0 ? (
-            <div className='rounded-full w-5 h-5 text-xs flex justify-center items-center text-white bg-indigo-600'>
+            <div className='rounded-full w-5 h-5 text-xs flex justify-center items-center text-gray bg-lightinteractive dark:bg-darkinteractive'>
                 {unseenFriendRequestCount}
             </div>
         ) : (null)}

@@ -94,15 +94,15 @@ const Layout = async ({ children }: LayoutProps) => {
                             </div>
                             {/* sidebar content - display user actions that user can perform
                                 1st user action - add friend */}
-                            <ul role='list' className='-mx-2 mt-2 space-y-1 text-lightinline dark:text-darkinline'>
+                            <ul role='list' className='-mx-2 mt-2 space-y-1 text-lightinline dark:text-darkinline border-lightinline dark:border-darkinline'>
                                 {sideBarOptions.map((option) => {
                                     const Icon = Icons[option.Icon]
                                     return (
                                         <li key={option.id}>
                                             <Link
                                                 href={option.href}
-                                                className='text-gray-700 hover:text-lightinteractive dark:hover:text-darkinteractive hover:bg-gray-50 group flex gap-3 rounded-md p-2 text-sm leading-6 font-semibold'>
-                                                <span className='text-lightinline dark:text-darkinline border-gray-200 group-hover:border-lightinteractive group-hover:text-lightinteractive dark:group-hover:border-darkinteractive dark:group-hover:text-darkinteractive flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-text-[0.625rem] font-medium bg-white'>
+                                                className='hover:text-lightinteractive dark:hover:text-darkinteractive group flex gap-3 rounded-md p-2 text-sm leading-6 font-semibold'>
+                                                <span className='text-lightinline dark:text-darkinline border-lightinline dark:border-darkinline group-hover:border-lightinteractive group-hover:text-lightinteractive dark:group-hover:border-darkinteractive dark:group-hover:text-darkinteractive flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-text-[0.625rem] font-medium'>
                                                     <Icon className='h-4 w-4' />
                                                 </span>
 
@@ -125,7 +125,7 @@ const Layout = async ({ children }: LayoutProps) => {
                         {/* sidebar content - user profile information at bottom of sidebar with signout button */}
                         <li className='-mx-6 mt-auto flex items-center'>
                             <div className='flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6'>
-                                <div className='relative h-8 w-8 bg-gray-50'>
+                                <div className='relative h-8 w-8'>
                                     <Image
                                         fill
                                         referrerPolicy='no-referrer'
@@ -138,7 +138,7 @@ const Layout = async ({ children }: LayoutProps) => {
                                 <span className='sr-only'>Your profile</span>
                                 <div className='flex flex-col'>
                                     <span aria-hidden='true'>{session.user.name}</span>
-                                    <span className='text-sm text-zinc-400' aria-hidden='true'>
+                                    <span className='text-sm text-darkgray dark:text-gray' aria-hidden='true'>
                                         {session.user.email}
                                     </span>
                                 </div>

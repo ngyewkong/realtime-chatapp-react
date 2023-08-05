@@ -86,17 +86,17 @@ const FriendRequests: FC<FriendRequestsProps> = ({ incomingFriendRequests, sessi
     return (<>
         {
             friendRequests.length === 0 ? (
-                <p className='text-sm text-zinc-500'>Nothing to show here...</p>
+                <p className='text-sm text-lightinline dark:text-darkinline'>Nothing to show here...</p>
             ) : (
                 friendRequests.map((friendRequest) => (
                     <div key={friendRequest.senderId} className='flex gap-4 items-center'>
-                        <UserPlus className='text-lightinline dark:text-darkinline' />
-                        <p className='font-medium text-lg'>{friendRequest.senderEmail}</p>
-                        <button onClick={() => handleAcceptFriendRequest(friendRequest.senderId)} aria-label='accept friend' className='w-8 h-8 bg-indigo-600 hover:bg-indigo-700 grid place-items-center rounded-full transition hover:shadow-md' >
-                            <Check className='font-semibold text-lightprimary w-3/4 h-3/4' />
+                        <UserPlus className='text-lightinline dark:text-darkinline border-lightinline dark:border-darkinline hover:border-lightinteractive dark:hover:border-darkinteractive' />
+                        <p className='font-medium text-lg text-darkgray dark:text-gray'>{friendRequest.senderEmail}</p>
+                        <button onClick={() => handleAcceptFriendRequest(friendRequest.senderId)} aria-label='accept friend' className='w-8 h-8 bg-correct ring-1 hover:ring-lightinteractive dark:hover:ring-darkinteractive grid place-items-center rounded-full transition hover:shadow-md' >
+                            <Check className='font-semibold text-gray w-3/4 h-3/4' />
                         </button>
-                        <button onClick={() => handleRejectFriendRequest(friendRequest.senderId)} aria-label='reject friend' className='w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md' >
-                            <X className='font-semibold text-lightprimary w-3/4 h-3/4' />
+                        <button onClick={() => handleRejectFriendRequest(friendRequest.senderId)} aria-label='reject friend' className='w-8 h-8 bg-wrong ring-1 hover:ring-lightinteractive dark:hover:ring-darkinteractive grid place-items-center rounded-full transition hover:shadow-md' >
+                            <X className='font-semibold text-gray w-3/4 h-3/4' />
                         </button>
                     </div>
                 ))
