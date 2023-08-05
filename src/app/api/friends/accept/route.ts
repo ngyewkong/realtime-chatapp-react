@@ -43,18 +43,32 @@ export async function POST(req: Request) {
             return new Response("No Friend Request", { status: 400 });
         }
 
+        // to handle friend request notification counter (realtime)
+        // use Promise.all() to handle simultaneously 
+        const [userRaw, friendRaw] = (await Promise.all(
+            [
+                fetchRedis(`get`, `user:${session.user.id}`),
+                fetchRedis(`get`, `user:${idToAdd}`),
+            ]
+        )) as [string, string]
+
+        // json.parse the raw user and friend
+        const user = JSON.parse(userRaw) as User
+        const friend = JSON.parse(friendRaw) as User
+
         // trigger pusher function to refresh
         // notify added user
-        await pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new-friend', {});
-
-        // after validations add user (idToAdd) to friends set of user (session.user.id)
-        await db.sadd(`user:${session.user.id}:friends`, idToAdd);
-
-        // add user (session.user.id) to friends set of idToAdd
-        await db.sadd(`user:${idToAdd}:friends`, session.user.id);
-
-        // remove user (idToAdd) from incoming_friend_request set of session.user.id
-        await db.srem(`user:${session.user.id}:incoming_friend_request`, idToAdd);
+        // wrap with a Promise.all
+        await Promise.all([
+            pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new_friend', user),
+            pusherServer.trigger(toPusherKey(`user:${session.user.id}:friends`), 'new_friend', friend),
+            // after validations add user (idToAdd) to friends set of user (session.user.id)
+            db.sadd(`user:${session.user.id}:friends`, idToAdd),
+            // add user (session.user.id) to friends set of idToAdd
+            db.sadd(`user:${idToAdd}:friends`, session.user.id),
+            // remove user (idToAdd) from incoming_friend_request set of session.user.id
+            db.srem(`user:${session.user.id}:incoming_friend_request`, idToAdd),
+        ]);
 
         // optional remove outbound_friend_request set for idToAdd 
 

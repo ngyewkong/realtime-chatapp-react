@@ -28,6 +28,9 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({ ses
             `user:${sessionId}:incoming_friend_request`
         ));
 
+        // subscribe to another event to make the friend requests tracker real time
+        pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`));
+
         // tell Pusher to bind the incoming_friend_request to a frontend function 
         // friendRequestHandler
 
@@ -35,14 +38,24 @@ const FriendRequestsSidebarOption: FC<FriendRequestsSidebarOptionProps> = ({ ses
             // do not need the data as we just updating the friend req count 
             setUnseenFriendRequestCount((prev) => prev + 1)
         }
+
+        const addedFriendHandler = () => {
+            setUnseenFriendRequestCount((prev) => prev - 1)
+        }
+
         pusherClient.bind('incoming_friend_request', friendRequestHandler);
+        pusherClient.bind(`new_friend`, addedFriendHandler);
 
         return () => {
             // cleanup after the action/s are done
             pusherClient.unsubscribe(toPusherKey(
                 `user:${sessionId}:incoming_friend_request`
             ));
+            pusherClient.unsubscribe(toPusherKey(
+                `user:${sessionId}:friends`
+            ));
             pusherClient.unbind('incoming_friend_request', friendRequestHandler);
+            pusherClient.unbind('new_friend', addedFriendHandler);
         }
     }, [sessionId])
 

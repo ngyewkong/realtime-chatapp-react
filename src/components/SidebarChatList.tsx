@@ -31,6 +31,8 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ sessionId, friends }) => {
   // set up state to track unseen messages
   // initial value is an empty array
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
+  // to handle the refresh of user being friends in the sidebar chat component
+  const [activeChats, setActiveChats] = useState<User[]>(friends);
 
   // handle realtime notification when new chat messages are sent
   useEffect(() => {
@@ -66,9 +68,11 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ sessionId, friends }) => {
       setUnseenMessages((prev) => [...prev, message])
     }
 
-    const newFriendHandler = () => {
-      // just need to reload the window without hard reload
-      router.refresh();
+    const newFriendHandler = (newFriend: User) => {
+      // better handle the update of friends list in real time
+      setActiveChats((prev) => (
+        [...prev, newFriend]
+      ))
     }
 
     // bind the new events
