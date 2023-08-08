@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query'
 import { CornerDownLeft, Loader2 } from 'lucide-react'
 import { nanoid } from 'nanoid'
 import { FC, HTMLAttributes, useContext, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
 import TextareaAutosize from 'react-textarea-autosize'
 
 interface ChatBotInputProps extends HTMLAttributes<HTMLDivElement> {
@@ -87,6 +88,14 @@ const ChatBotInput: FC<ChatBotInputProps> = ({ className, ...props }) => {
             setTimeout(() => {
                 textareaRef.current?.focus();
             }, 10);
+        },
+        // error handling
+        onError(_, message) {
+            // toast notification to user on error with OpenAI api
+            toast.error('Something went wrong. please try again.')
+            // remove the message that failed to send to the api endpoint
+            removeMessage(message.id);
+            textareaRef.current?.focus();
         }
     });
 
