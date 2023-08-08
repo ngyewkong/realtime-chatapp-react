@@ -1,4 +1,4 @@
-# Realtime Chatapp using React
+# Realtime Chatapp using React with AI ChatBot
 
 ## Tech Stack
 
@@ -9,6 +9,7 @@
     - NextAuth (to handle OAuth)
     - WebSockets (Using Pusher)
     - Redis (Using Upstash)
+    - OpenAI API (ChatGPT-3.5 Turbo for ChatBot)
 
 ## Generating own secret key for use in Next Auth decrypt of JWT
 

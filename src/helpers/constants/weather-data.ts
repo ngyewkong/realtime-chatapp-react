@@ -1,20 +1,16 @@
 import axios from "axios";
 
-
+// not working (need to work on output formatting for metadata)
 let realTimeWeatherData; 
  async function getSgWeather() {
     const realTimeWeatherJSON = await axios.get("https://api.data.gov.sg/v1/environment/4-day-weather-forecast");
     realTimeWeatherData = realTimeWeatherJSON;
-
-    console.log(realTimeWeatherData);  
     return realTimeWeatherData; 
  }
 
  getSgWeather();
 
 export const realTimeWeatherInfo = realTimeWeatherData;
-
-console.log(realTimeWeatherInfo);
 
 export const weatherData = `
 <city>
