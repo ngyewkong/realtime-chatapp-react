@@ -9,13 +9,10 @@ interface DarkModeToggleProps {
 const DarkModeToggle: FC<DarkModeToggleProps> = ({ }) => {
     function useDarkSide() {
         const systemTheme = localStorage.getItem("theme")!;
-        console.log(systemTheme);
         const [theme, setTheme] = useState(systemTheme);
         const colorTheme: string = theme === "light" ? "dark" : "light";
 
         useEffect(() => {
-            let x = localStorage.getItem("theme");
-            console.log("theme inside useEffect: ", x);
             const root = window.document.documentElement;
             root.classList.remove(colorTheme);
             root.classList.add(theme);
