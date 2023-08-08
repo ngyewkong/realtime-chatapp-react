@@ -41,7 +41,6 @@ export async function POST(req: Request) {
     // get the stream back
     const stream = await OpenAIStream(payload);
 
-    console.log('test endpoint');
     // return the stream in the api response
     return new Response(stream);
 }

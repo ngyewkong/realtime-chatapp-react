@@ -13,6 +13,7 @@ import { Session } from 'next-auth'
 import { usePathname } from 'next/navigation'
 import { SideBarOption } from '@/types/typing'
 import DarkModeToggle from './DarkModeToggle'
+import ChatBotPopup from './ChatBotPopup'
 
 interface MobileChatLayoutProps {
   friends: User[]

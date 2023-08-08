@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import React from 'react';
+import React from 'react'
+import Link from 'next/link'
 
 const MarkdownLite = ({ text }: { text: string }) => {
     // check if the text is link
@@ -37,16 +37,12 @@ const MarkdownLite = ({ text }: { text: string }) => {
         parts.push(text.slice(lastIndex));
     }
 
-    console.log("text: ", text);
-    console.log("parts: ", parts);
-
     // return react fragment so that we can assign a key to each fragment rendered
     return (
         <>
-            {parts.map((part, i) => {
+            {parts.map((part, i) => (
                 <React.Fragment key={i}>{part}</React.Fragment>
-                // <div key={i}>{JSON.stringify(part)}</div>
-            })}
+            ))}
         </>
     )
 }

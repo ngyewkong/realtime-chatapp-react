@@ -4,27 +4,27 @@ export const featureData = `
 <content>
     <feature>
     <url>https://realtime-chatapp-react.vercel.app/login</url>
-    <desc>Login using 3rd Party Authentication (Google, O365 etc)</desc>
+    <desc>Authentication Feature: Using OAuth (Google, O365 etc)</desc>
     </feature>
     <feature>
     <url>https://realtime-chatapp-react.vercel.app/dashboard</url>
-    <desc>Dashboard showing most recent that the user have</desc>
+    <desc>Dashboard Feature: Showing most recent chat history</desc>
     </feature>
     <feature>
     <url>https://realtime-chatapp-react.vercel.app/dashboard/add</url>
-    <desc>Add existing sign up users to be a friend</desc>
+    <desc>Add Friend Feature: Add existing app users to be a friend</desc>
     </feature>
     <feature>
     <url>https://realtime-chatapp-react.vercel.app/dashboard/requests</url>
-    <desc>Accept or Reject friend request</desc>
+    <desc>Accept or Reject Friend Request Feature</desc>
     </feature>
     <feature>
     <url>https://realtime-chatapp-react.vercel.app/dashboard/chat</url>
-    <desc>Chat with friends</desc>
+    <desc>Chatroom Feature: Chat with friends</desc>
     </feature>
     <feature>
-    <url>https://realtime-chatapp-react.vercel.app/dashboard/chat/chatbot</url>
-    <desc>Talk with Chatbot</desc>
+    <url>https://realtime-chatapp-react.vercel.app/dashboard</url>
+    <desc>Chat Bot Feature: Chat Bot support (using OpenAI API)</desc>
     </feature>
 </content>
 </url>

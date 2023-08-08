@@ -41,8 +41,7 @@ const ChatBotMessages: FC<ChatBotMessagesProps> = ({ className, ...props }) => {
                                         'bg-lightinteractive dark:bg-darkinteractive text-darkinline dark:text-gray': message.isUserMessage,
                                         'bg-darkinteractive dark:bg-lightinteractive text-darkinline dark:text-gray': !message.isUserMessage,
                                     })}>
-                                    <div>{message.text}</div>
-                                    {/* <MarkdownLite text={message.text} /> */}
+                                    <MarkdownLite text={message.text} />
                                 </p>
                             </div>
                         </div>
