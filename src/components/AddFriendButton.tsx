@@ -66,7 +66,7 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({ }) => {
     return <form onSubmit={handleSubmit(onSubmit)} className='max-w-sm'>
         <label
             htmlFor="email"
-            className='block text-sm font-medium leading-6 text-gray-900'>
+            className='block text-sm font-medium leading-6 text-lightinline dark:text-darkinline'>
             Add Friend by Email
         </label>
 
@@ -75,7 +75,7 @@ const AddFriendButton: FC<AddFriendButtonProps> = ({ }) => {
                 {...register('email')}
                 type="text"
                 className='block w-full rounded-md border-0 py-1.5 text-lightinline dark:text-darkinline
-                shadow-sm ring-1 ring-inset ring-lightprimarysubtle dark:ring-darkprimarysubtle placeholder:text-gray
+                shadow-sm ring-1 ring-inset ring-gray placeholder:text-darkgray
                 focus:ring-2 focus:ring-inset focus:ring-lightinteractive dark:focus:ring-darkinteractive
                 sm:text-sm sm:leading-6'
                 placeholder='johndoe@email.com' />
