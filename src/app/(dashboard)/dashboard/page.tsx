@@ -1,3 +1,4 @@
+import ChatBotPopup from '@/components/ChatBotPopup'
 import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
 import { fetchRedis } from '@/helpers/redis'
 import { authOptions } from '@/lib/auth'
@@ -79,6 +80,9 @@ const page = async ({ }) => {
                     </div>
                 ))
             )}
+            <div className='-mx-2 mt-2 space-y-1 text-lightinline dark:text-darkinline group-hover:border-lightinteractive group-hover:text-lightinteractive dark:group-hover:border-darkinteractive dark:group-hover:text-darkinteractive'>
+                <ChatBotPopup />
+            </div>
         </div>
     )
 }

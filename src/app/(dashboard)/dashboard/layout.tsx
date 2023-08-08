@@ -13,6 +13,8 @@ import SidebarChatList from '@/components/SidebarChatList'
 import DarkModeToggle from '@/components/DarkModeToggle'
 import MobileChatLayout from '@/components/MobileChatLayout'
 import { SideBarOption } from '@/types/typing'
+import ChatBot from '@/components/ChatBotPopup'
+import ChatBotPopup from '@/components/ChatBotPopup'
 
 interface LayoutProps {
     children: ReactNode
@@ -117,6 +119,11 @@ const Layout = async ({ children }: LayoutProps) => {
                             <li className='-mx-2 mt-2 space-y-1 text-lightinline dark:text-darkinline group-hover:border-lightinteractive group-hover:text-lightinteractive dark:group-hover:border-darkinteractive dark:group-hover:text-darkinteractive'>
                                 <FriendRequestsSidebarOption sessionId={session.user.id} initialUnseenRequestCount={unseenRequestCount} />
                             </li>
+                            {/* 3rd user action - chatbot navigation */}
+                            <li className='-mx-2 mt-2 space-y-1 text-lightinline dark:text-darkinline group-hover:border-lightinteractive group-hover:text-lightinteractive dark:group-hover:border-darkinteractive dark:group-hover:text-darkinteractive'>
+                                <ChatBotPopup />
+                            </li>
+
                         </li>
 
 

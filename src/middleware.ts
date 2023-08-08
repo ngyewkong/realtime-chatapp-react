@@ -1,9 +1,10 @@
 import { getToken } from 'next-auth/jwt'
 import { withAuth } from 'next-auth/middleware'
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { rateLimiter } from './lib/rate-limiter';
 
 export default withAuth(
-    async function middleware(req) {
+    async function middleware(req: NextRequest) {
         const pathname = req.nextUrl.pathname
 
         // check pathname & protect routes
@@ -13,7 +14,7 @@ export default withAuth(
         const isLoginPage = pathname.startsWith("/login");
 
         // sensitive route (dashboard - user must be logged in)
-        const sensitiveRoutes = ["/dashboard"];
+        const sensitiveRoutes = ["/dashboard", "/api/message/chatbot"];
 
         // return true if the route in sensitiveRoutes startswith /dashboard
         const isAccessSensitiveRoute = sensitiveRoutes.some((route) => pathname.startsWith(route));
@@ -42,6 +43,23 @@ export default withAuth(
             // redirect the user to login page
             return NextResponse.redirect(new URL("/dashboard", req.url));
         }
+
+        // handle auth and rate limit on the openai api endpt
+        if (isAuth && isAccessSensitiveRoute) {
+            // setup ratelimit on expensive api calls
+            // if no ip set to localhost or 127.0.0.1
+            const ip = req.ip ?? 'localhost:3000';
+
+            try {
+                const { success } = await rateLimiter.limit(ip);
+                if (!success) {
+                    return new NextResponse('Too many requests sent in a short period. Please try again later.');
+                } 
+                return NextResponse.next();
+            } catch (error) {
+                return new NextResponse('Sorry, something went wrong during processing. Please try again later.')   
+            }
+        }
     }, {
         // handle callback to prevent too many redirects
         callbacks: {
@@ -54,7 +72,8 @@ export default withAuth(
 
 // match all the routes to withAuth middleware function
 // :path* is a catch-all route
+// added api route to openai end pt to rate limit the api call (costs)
 export const config = {
-    matcher: ["/", "/login", "/dashboard/:path*"],
+    matcher: ["/", "/login", "/dashboard/:path*", "/api/message/chatbot/:path*"],
 
 }
